@@ -1,0 +1,21 @@
+if [ "$1" != "" ]; then
+	echo "Restoring files from local backup: ver = $1"
+	dir=tmp/bkup_$1
+	cp $dir/netclassid_cgroup.c net/core/netclassid_cgroup.c
+	cp $dir/cls_cgroup.h include/net/cls_cgroup.h
+	cp $dir/tcp_output.c net/ipv4/tcp_output.c
+	cp $dir/tcp_ipv4.c net/ipv4/tcp_ipv4.c
+	cp $dir/udp.c net/ipv4/udp.c
+	cp $dir/socket.c net/socket.c
+	cp $dir/net.h include/linux/net.h
+else
+	ver=`cat ver`
+	ver=`expr $ver + 1`
+
+	echo "Making ver $ver"
+	mkdir -p tmp/bkup_$ver
+
+	cp bkup net/core/netclassid_cgroup.c include/net/cls_cgroup.h net/ipv4/tcp_output.c net/ipv4/tcp_ipv4.c net/ipv4/udp.c net/socket.c include/linux/net.h tmp/bkup_$ver/
+	scp -r tmp/bkup_$ver ktayal@172.27.19.17:/users/mtech/ktayal/OS/
+	echo $ver > ver
+fi
