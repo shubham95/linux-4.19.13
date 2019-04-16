@@ -1088,7 +1088,7 @@ long do_sys_open(int dfd, const char __user *filename, int flags, umode_t mode)
 	// 			}
 	// 	up_read(&mm->mmap_sem);
 	// }
-	printk(KERN_INFO "Agruments dfd [%d] , filename : [%s], flags : [%d], mode :[%d]\nReturn fd:[%ld], filename : [%s] pid:[%d] \n",dfd,filename,flags,mode,fd,tmp,current->pid);
+	//printk(KERN_INFO "Agruments dfd [%d] , filename : [%s], flags : [%d], mode :[%d]\nReturn fd:[%ld], filename : [%s] pid:[%d] \n",dfd,filename,flags,mode,fd,tmp,current->pid);
 	
 	// if(do_sys_open_hook)
 	// 	do_sys_open_hook(dfd,filename,flags,mode,fd);
