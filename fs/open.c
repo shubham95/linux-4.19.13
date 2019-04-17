@@ -1043,7 +1043,9 @@ struct file *file_open_root(struct dentry *dentry, struct vfsmount *mnt,
 		return ERR_PTR(err);
 	return do_file_open_root(dentry, mnt, filename, &op);
 }
-// EXPORT_SYMBOL(file_open_root);
+EXPORT_SYMBOL(file_open_root);
+
+//Added by connoisseur
 // int (*do_sys_open_hook)(int dfd, const char __user *filename, int flags, umode_t mode, int fd) = NULL;
 // EXPORT_SYMBOL(do_sys_open_hook);
 // static int checkpoint_pid = 0;
