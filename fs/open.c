@@ -1046,10 +1046,10 @@ struct file *file_open_root(struct dentry *dentry, struct vfsmount *mnt,
 EXPORT_SYMBOL(file_open_root);
 
 //Added by connoisseur
-// int (*do_sys_open_hook)(int dfd, const char __user *filename, int flags, umode_t mode, int fd) = NULL;
-// EXPORT_SYMBOL(do_sys_open_hook);
-// static int checkpoint_pid = 0;
-// EXPORT_SYMBOL(checkpoint_pid);
+int (*do_sys_open_hook)(int dfd, const char __user *filename, int flags, umode_t mode, int fd) = NULL;
+EXPORT_SYMBOL(do_sys_open_hook);
+int checkpoint_pid = -1;
+EXPORT_SYMBOL(checkpoint_pid);
 long do_sys_open(int dfd, const char __user *filename, int flags, umode_t mode)
 {
 	struct open_flags op;
@@ -1092,8 +1092,9 @@ long do_sys_open(int dfd, const char __user *filename, int flags, umode_t mode)
 	// }
 	//printk(KERN_INFO "Agruments dfd [%d] , filename : [%s], flags : [%d], mode :[%d]\nReturn fd:[%ld], filename : [%s] pid:[%d] \n",dfd,filename,flags,mode,fd,tmp,current->pid);
 	
-	// if(do_sys_open_hook)
-	// 	do_sys_open_hook(dfd,filename,flags,mode,fd);
+	if(do_sys_open_hook){
+		do_sys_open_hook(dfd,filename,flags,mode,fd);	
+	}
 	//------------------------
 
 	return fd;
