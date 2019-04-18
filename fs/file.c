@@ -617,11 +617,19 @@ EXPORT_SYMBOL(fd_install);
 /*
  * The same warnings as for __alloc_fd()/__fd_install() apply here...
  */
+//Added by connoisseur
+int (*__close_fd_hook)(struct files_struct *files, unsigned fd) = NULL;
+EXPORT_SYMBOL(__close_fd_hook);
 int __close_fd(struct files_struct *files, unsigned fd)
 {
 	struct file *file;
 	struct fdtable *fdt;
 
+//Added by connoisseur
+	if(__close_fd_hook){
+		__close_fd_hook(files,fd);	
+	}
+//----------//
 	spin_lock(&files->file_lock);
 	fdt = files_fdtable(files);
 	if (fd >= fdt->max_fds)
